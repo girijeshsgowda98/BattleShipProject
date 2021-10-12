@@ -16,7 +16,7 @@ public class Main {
     static boolean battleCondition = true;
     static int count = 0;
     static int count2 = 0;
-
+    static boolean printCondition = false;
     enum Ship {
         AIRCRAFT_CARRIER("Aircraft Carrier", 5),
         BATTLESHIP("Battleship", 4),
@@ -93,15 +93,19 @@ public class Main {
         if (!condition) {
             promptEnterKey();
             if (battleCondition) {
-                print();
+                printCondition = true;
+                printField();
                 battleTwoEntryCondition = false;
+                printCondition = false;
                 printField();
                 System.out.println("Player 1, it's your turn:\n");
                 battleTwoEntryCondition = false;
                 entryBattle();
             } else {
-                print();
+                printCondition = true;
+                printField();
                 battleTwoEntryCondition = true;
+                printCondition = false;
                 printField();
                 System.out.println("Player 2, it's your turn:\n");
                 battleTwoEntryCondition = true;
@@ -505,27 +509,23 @@ public class Main {
         for (int i = 0; i < 10; i++, wordField++) {
             System.out.print(wordField);
             for (int j = 0; j < 10; j++) {
-                if (!battleTwoEntryCondition) {
-                    System.out.print(" " + field[i][j]);
+                if(!printCondition) {
+                    if (!battleTwoEntryCondition) {
+                        System.out.print(" " + field[i][j]);
+                    } else {
+                        System.out.print(" " + field2[i][j]);
+                    }
                 } else {
-                    System.out.print(" " + field2[i][j]);
+                    System.out.print(" "+"~");
                 }
             }
             System.out.println();
         }
-        System.out.println();
-
-    }
-    public static void print() {
-        System.out.println("  1 2 3 4 5 6 7 8 9 10");
-        char wordField = 'A';
-        for (int i = 0; i < 10; i++, wordField++) {
-            System.out.print(wordField);
-            for (int j = 0; j < 10; j++) {
-                System.out.print(" "+"~");
-            }
+        if(!printCondition) {
             System.out.println();
+        } else {
+            System.out.println("---------------------");
         }
-        System.out.println("---------------------");
+
     }
 }
